@@ -1,10 +1,3 @@
-/******************************************************************************
-
-Welcome to GDB Online.
-GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, Perl, Pascal, HTML, CSS, JS
-Code, Compile, Run and Debug online from anywhere in world.
-
-*******************************************************************************/
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -44,13 +37,13 @@ private:
 
 void zeroMatrix(Matrix& m) {
     auto sz = m.size();
-    
+
     int* row = new int[sz.first];
     int* col = new int[sz.second];
 
     for(int i = 0; i <sz.first; i++){row[i] = -1;}
     for(int j = 0; j <sz.second; j++){col[j] = -1;}
-    
+
     for (int i = 0; i < sz.first; i++) {
         for (int j = 0; j < sz.second; j++) {
             if(m[i][j] == 0){
@@ -59,7 +52,7 @@ void zeroMatrix(Matrix& m) {
             }
         }
     }
-    
+
     for(int i = 0; i <sz.first; i++){
         if(row[i] == 0){
             for(int j = 0; j < sz.second; j++){
@@ -75,7 +68,7 @@ void zeroMatrix(Matrix& m) {
             }
         }
     }
-    
+
     delete [] row;
     delete [] col;
 }
