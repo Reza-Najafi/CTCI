@@ -10,7 +10,8 @@ public:
     int count = 0;
     for(int i = 0; i < ROW; i++) {
       for(int j = 0; j < COL; j++) {
-        m[i*COL+j] = count++;
+        count +=2;
+        m[i*COL+j] = count;
       }
     }
   }
@@ -38,28 +39,22 @@ private:
 pair<int , int> find_rec(Matrix& m, pair<int, int> p1, pair<int, int>p2, int t){
   auto mid = make_pair((p1.first+p2.first)/2,(p1.second+p2.second)/2);
   if(t == m[mid.first][mid.second]) {return mid;}
-  if(mid.first == p1.first && mid.second == p1.second ) {
-    if(t == m[mid.first+1][mid.second]) {return(make_pair(mid.first+1,mid.second));}
-    if(t == m[mid.first][mid.second+1]) {return(make_pair(mid.first,mid.second+1));}
-    if(t == m[mid.first+1][mid.second+1]) {return(make_pair(mid.first+1,mid.second+1));}
-    return make_pair(-1,-1);
-  }
 
   if(t < m[p1.first][p1.second] || t > m[p2.first][p2.second] ) {return make_pair(-1,-1);}
 
   if(t > m[mid.first][mid.second])
   {
-    auto f4 = find_rec(m,mid,p2,t);
+    auto f4 = find_rec(m,make_pair(p1.first+1, mid.second+1),p2,t);
     if(f4.first != -1) {return f4;}
   } else
   {
     auto f1 = find_rec(m, p1,mid,t);
     if(f1.first != -1) {return f1;}
   }
-  auto f2 = find_rec(m, make_pair(p1.first, mid.second+1), make_pair(mid.first-1,p2.second), t);
+  auto f2 = find_rec(m, make_pair(p1.first, mid.second+1), make_pair(mid.first,p2.second), t);
   if(f2.first != -1) {return f2;}
 
-  auto f3 = find_rec(m, make_pair(mid.first+1, p1.second), make_pair(p2.first, mid.second-1), t);
+  auto f3 = find_rec(m, make_pair(mid.first+1, p1.second), make_pair(p2.first, mid.second), t);
   if(f3.first != -1) {return f3;}
 
   return (make_pair(-1,-1));
@@ -69,8 +64,8 @@ pair<int , int> find2D(Matrix& m, int t){
   return(find_rec(m, make_pair(0,0), make_pair(sz.first-1, sz.second-1), t));
 }
 int main() {
-  Matrix m(7,9);
+  Matrix m(7,8);
   m.print();
-  auto f = find2D(m, 61);
+  auto f = find2D(m, 110);
   cout << f.first << " , "<< f.second << " "<<endl;
 }
