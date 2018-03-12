@@ -37,8 +37,6 @@ private:
 
 pair<int , int> find_rec(Matrix& m, pair<int, int> p1, pair<int, int>p2, int t){
   auto mid = make_pair((p1.first+p2.first)/2,(p1.second+p2.second)/2);
-  auto sz = m.size();
-
   if(t == m[mid.first][mid.second]) {return mid;}
   if(mid.first == p1.first && mid.second == p1.second ) {
     if(t == m[mid.first+1][mid.second]) {return(make_pair(mid.first+1,mid.second));}
@@ -52,7 +50,7 @@ pair<int , int> find_rec(Matrix& m, pair<int, int> p1, pair<int, int>p2, int t){
   if(t > m[mid.first][mid.second])
   {
     auto f4 = find_rec(m,mid,p2,t);
-    if(f4.first != -1) {return f4;} 
+    if(f4.first != -1) {return f4;}
   } else
   {
     auto f1 = find_rec(m, p1,mid,t);
