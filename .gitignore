@@ -1,2 +1,8 @@
 
-10-9/.vscode/c_cpp_properties.json
+segmentingString/a.exe
+*.json
+*.pdb
+*.exe
+*.code-workspace
+*.ilk
+8-11-fang/8-11-fang.cpp
