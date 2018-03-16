@@ -6,3 +6,4 @@ segmentingString/a.exe
 *.code-workspace
 *.ilk
 8-11-fang/8-11-fang.cpp
+*.DS_Store
