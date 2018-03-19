@@ -8,7 +8,7 @@ public:
         auto p  = make_pair(1,make_tuple(0,0,0));
         generate(p,k);
     }
-    void generate(pair<int, tuple<int, int, int>> p, int k){
+    void generate(pair<long long int, tuple<int, int, int>> p, int k){
         auto val = p.first;
         auto fact = p.second;
         auto thirdFactor = get<0>(fact);
@@ -36,23 +36,25 @@ public:
             generate(newNum,k);
         }
     }
-    pair<int, tuple<int, int, int>> getval(int k) {
+    auto getval(int k)
+    {
         auto begIt = numList.begin();
         advance(begIt, k);
-        return *begIt;
+        return begIt;
     }
+
 private:
-    map<int, tuple< int, int, int>> numList;
+    map<long long  int, tuple< int, int, int>> numList;
 };
 
 int main()
 {
     KthMultiple kth;
-    int val = 4;
+    int val = 5;
     kth.generate(val);
     for(int i = 0; i <val; i++ ){
         auto it = kth.getval(i);
-        cout << i<<"th factor is "<<  it.first << " factors are : " << get<0>(it.second) << " , " << get<1>(it.second) << " , " << get<2>(it.second) << endl;
+        cout << i<<"th factor is "<<  it->first << " factors are : " << get<0>(it->second) << " , " << get<1>(it->second) << " , " << get<2>(it->second) << endl;
     }
 
     return 0;
