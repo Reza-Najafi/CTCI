@@ -12,8 +12,7 @@ pair< T,  S>  operator+(pair<T,S> p1, pair<T,S> p2){
 }
 
 bool withinRange(pair<int, int> p, pair<int, int> size) {
-    return (p.first < size.first && p.second < size.second &&
-    p.first >=0 && p.second >=0)  ;
+    return (p.first < size.first && p.second < size.second && p.first >=0 && p.second >=0)  ;
 }
 
 int pondSizeBFS(Matrix& m, pair<int, int> p) {
@@ -25,14 +24,16 @@ int pondSizeBFS(Matrix& m, pair<int, int> p) {
     int count = 0;
     queue<pair<int,int>> q;
     q.push(p);
+    m.at(p) = -1;
     while(!q.empty())
     {
         auto thisP = q.front();
-        m.at(thisP) = -1;
         count++;
         for (auto& n:neighbours){
-            if(withinRange(n+p,m.size()) && m.at(n+p) == 0){
-                q.push(n+p);
+            auto newP = n+thisP;
+            if(withinRange(newP,m.size()) && m.at(newP) == 0){
+                m.at(newP) = -1;
+                q.push(newP);
             }
         }
         q.pop();
@@ -50,16 +51,26 @@ vector<int> pondSizes(Matrix& m) {
            }
         }
     }
+    return v;
 }
 
 int main() {
     const int h = 7;
     const int w = 9;
-    Matrix m(w,h);
+    Matrix m(h,w);
+    m[3][4] = 0;
+    m[4][5] = 0;
+    m[5][6] = 0;
+    m[3][3] = 0;
+    m[3][7] = 0;
+    m[2][6] = 0;
+    m[1][5] = 0;
+    m[0][4] = 0;
+    m[0][6] = 0;
     m.print();
     auto v = pondSizes(m);
-    //cout << "num of ponds "<< v.size()<<endl;
-   // for(auto& i : v){
-//        cout << i << endl;
- //   }
+    cout << "num of ponds "<< v.size()<<endl;
+    for(auto& i : v){
+        cout <<"pond size "<< i << endl;
+    }
 }
