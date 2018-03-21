@@ -6,44 +6,42 @@ using namespace std;
 void sortStack(stack<int>& s){
     stack<int> s1;
     int sz = s.size();
-    int i = 0;
-    while(i++ < sz){
-        int min = s.top();
-        while(s.size()> (i-1)) {
-            if(s.top()< min) {
-                min = s.top();
+    int sortedCount = 0;
+    while(sortedCount < sz){
+        int max = s.top();
+        bool start = true;
+        while(s.size()> sortedCount) {
+            if(s.top()> max) {
+                s1.push(max);// put the previously considered max on the aux stack
+                max = s.top();// set the new max
+            } else {
+                // we don't want to put the initialized max value at the start and create duplicates
+                if(!start){ s1.push(s.top()); }
+                start = false;
             }
-            s1.push(s.top());
             s.pop();
         }
-        s.push(min);
-        bool foundMin = false;
+        s.push(max);
+        sortedCount++;
         while(!s1.empty()) {
-            if(s1.top() != min || foundMin){
-                s.push(s1.top());
-            }
-            if(s1.top() == min){
-                foundMin = true;
-            }
+            s.push(s1.top());
             s1.pop();
         }
     }
-    while(!s.empty()){
-        s1.push(s.top());
-        s.pop();
-    }
-    s = s1;
+
 }
 
 int main()
 {
     int arr[] = {1,5,0,-2,4,2,3,0,1,7,9,-5};
-    cout << sizeof(arr)/sizeof(arr[0]) << endl;
+
     stack<int> s;
     for(auto& i : arr){
         s.push(i);
     }
+    cout << s.size()<< endl;
     sortStack(s);
+    cout << s.size()<< endl;
     while(!s.empty()) {
         cout << s.top() << " , ";
         s.pop();
