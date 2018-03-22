@@ -16,7 +16,7 @@ Node* ct(int v, Node* nl=NULL, Node* nr=NULL) {
 struct NodeWrapper  {
     Node* n;
     int l;// keeps the level
-    int p;//lefat what width did the parent were appear on the screen
+    int p;//at what location (with respect to the left of the window) did the parent were appear on the screen
     int lr;// left child or right child -1 or 1
     NodeWrapper(Node* node, int level, int pos, int left_right) :n(node),l(level),p(pos),lr(left_right) {}
 };
@@ -33,12 +33,12 @@ void printTree(Node* n) {
         int new_level = thisN.l;
         if(new_level != curr_level){
             curr_level = new_level;
-            int remaining =2*rootWidth - currLocationOnlevel; 
+            int remaining =2*rootWidth - currLocationOnlevel;
             if(remaining>0)std::cout << std::string(remaining,delim);
             std::cout << std::endl;
             currLocationOnlevel= 0;
-        } 
-        int children_gap = rootWidth/(1 << (thisN.l)); 
+        }
+        int children_gap = rootWidth/(1 << (thisN.l));
         int thisLoc = thisN.p+thisN.lr*children_gap - currLocationOnlevel;
         if (thisLoc < 0) {thisLoc = 1;}
         currLocationOnlevel += thisLoc;
@@ -51,7 +51,7 @@ void printTree(Node* n) {
         }
         s.pop();
     }
-    int remaining =2*rootWidth - currLocationOnlevel; 
+    int remaining =2*rootWidth - currLocationOnlevel;
     if(remaining>0)std::cout << std::string(remaining,delim);
     std::cout << std::endl;
 }
