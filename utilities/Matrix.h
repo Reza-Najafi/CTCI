@@ -1,6 +1,5 @@
 #include <iostream>
 #include <iomanip>
-using namespace std;
 
 class Matrix{
 public:
@@ -14,21 +13,21 @@ public:
         }
     }
     void print() {
-        cout << "["<< endl;
+        std::cout << "["<< std::endl;
         for(int i = 0; i < ROW; i++){
-            cout << "[ ";
+            std::cout << "[ ";
             for(int j = 0; j < COL; j++){
-                cout << setw(4) << (*this)[i][j] << ((j==(COL-1)) ? "":" , ");
+                std::cout << std::setw(4) << (*this)[i][j] << ((j==(COL-1)) ? "":" , ");
             }
-            cout << " ]" << endl;
+            std::cout << " ]" << std::endl;
         }
-        cout << "]"<< endl;
+        std::cout << "]"<< std::endl;
     }
 
     ~Matrix(){ delete[] m; }
     int* operator[](int i){ return (&m[i*COL]); }
-    pair<int, int> size() { return make_pair(ROW,COL);}
-    int& at(pair<int, int> p) { return (*this)[p.first][p.second];}
+    std::pair<int, int> size() { return std::make_pair(ROW,COL);}
+    int& at(std::pair<int, int> p) { return (*this)[p.first][p.second];}
 private:
     int* m;
     int ROW;
