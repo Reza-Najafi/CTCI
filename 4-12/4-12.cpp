@@ -1,9 +1,10 @@
 #include "../utilities/Tree.h"
 #include <iostream>
 #include <queue>
+#include <vector>
 using namespace std;
 
-Node* sum_up(Node* n){
+Node* create_sum_up_tree(Node* n) {
     if(!n) {return NULL;}
     Node* root = new Node(n->v, n->a[0], n->a[1]);
     queue<Node*> q;
@@ -26,10 +27,30 @@ Node* sum_up(Node* n){
         thisN->a[1] = newr;
         q.pop();
     }
-
     return root;
 }
 
+
+int count_node_with_sum(Node* n, int sum) {
+    if(!n) {return 0;}
+    return ((n->v == sum)+count_node_with_sum(n->a[0],sum)+count_node_with_sum(n->a[1], sum));
+}
+
+
+int count_path_with_sum(Node* n, vector<int>& v, int sum) {
+    if(!n) {return 0;}
+    int ret = (n->v == sum);
+    for(auto& parentNodeSum :v){
+        if((n->v - parentNodeSum)==sum) {
+            ret++;
+        }
+    }
+    v.push_back(n->v);
+    ret += count_path_with_sum(n->a[0],v, sum);
+    ret += count_path_with_sum(n->a[1],v, sum);
+    v.pop_back();
+    return ret;
+}
 
 int main() {
     Node* n1 = ct(1,NULL,ct(3));
@@ -40,7 +61,11 @@ int main() {
     Node* n_5 = ct(-5,n4,n5);
     Node* root = ct(2,n6,n_5);
     printTree(root);
-    Node* sumTree = sum_up(root);
+    Node* sumTree = create_sum_up_tree(root);
     cout << "Sum Tree\n";
     printTree(sumTree);
+    int sum = 9;
+    vector<int> v;
+    cout << "Number of path with size "<< sum << " : "<<count_path_with_sum(sumTree,v, sum) << endl;
+    
 }
