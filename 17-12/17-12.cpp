@@ -75,7 +75,7 @@ int main()
     res = p.second; // list head
     do{
         cout << res->v << " , ";
-        res=res->a[1];
+        res=res->a[0];
     }while(res);
     
     return 0;
