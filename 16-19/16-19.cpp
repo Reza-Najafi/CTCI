@@ -1,4 +1,4 @@
-#include "Matrix.h"
+#include "../utilities/Matrix.h"
 #include <iostream>
 #include <queue>
 using namespace std;
