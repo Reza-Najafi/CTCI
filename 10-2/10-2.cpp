@@ -10,6 +10,7 @@
 #include <vector>
 using namespace std;
 
+#if 0 // Solution#1 The in-place solution that uses a complete sort based on the histograms of each string
 void create_hist(string& str, int (&arr)[256]) {
     for(int &i: arr){
         i = 0;
@@ -79,11 +80,11 @@ void gruop_anagrams(vector<string>& a) {
     cout << endl;
     for(int i = 0; i < N; i++) {
         create_hist(a[i], arrHist[i]);
-        cout << "Input string "<< a[i] <<endl;
-        print_hist(arrHist[i]);
+        //cout << "Input string "<< a[i] <<endl;
+        //print_hist(arrHist[i]);
         id[i] = i;
     }
-    cout << endl;
+    //cout << endl;
     sort_hist(arrHist,id);
     cout << "index mapping array :\n";
     for(auto e : id){
@@ -109,6 +110,83 @@ void gruop_anagrams(vector<string>& a) {
         a[dst] = tmp;
     }
 }
+#endif // Solution#1 The in-place solution that uses a complete sort based on the histograms of each string
+
+
+
+#if 0 // Solution#2 The naive solution, Using the STL sort and overwritten compare function
+#include <algorithm>
+struct  {
+    // define a greater operator so that if a= isanagram(b) neither is greater than the other
+    bool operator()(string a, string b)
+    {
+        if (a.length() > b.length()) {
+            return true;
+        } 
+        if(a.length() < b.length()) {
+            return false;
+        }
+        sort(a.begin(), a.end());
+        sort(b.begin(), b.end());
+        if(a>b){return true;}
+        return false;
+        
+    }
+} compareAnagrams;
+
+void gruop_anagrams(vector<string>& v){
+    sort(v.begin(), v.end(), compareAnagrams);
+}
+#endif // Solution#2 Solution#3 The naive solution, Using the STL sort and overwritten compare function
+
+
+
+
+#if 1 // Solution#3 The in-place solution using a map for "bucketing" the anagrams
+#include <map>
+#include <algorithm>
+void gruop_anagrams(vector<string>& v){
+    map<string, vector<int>> m;
+    for(int i = 0; i < v.size(); i++) {
+        string toBeSorted = v[i];
+        sort(toBeSorted.begin(), toBeSorted.end());    
+        if(m.find(toBeSorted) == m.end()) {
+            vector<int> v;
+            v.push_back(i);
+            m.insert(make_pair(toBeSorted,v));
+        } else {
+            m[toBeSorted].push_back(i);
+        }
+    }
+    
+    vector<int> id(v.size());
+    int i = 0;
+    for(auto& e : m){
+        for(auto& val: e.second) {
+            id[i++] = val;    
+        }
+    }
+    cout << "The permutation indexes: \n";
+    for(auto& e: id) {
+        cout << e <<" , ";
+    }
+    cout<<endl;
+    // Go through permutation
+    for(int i = 0; i < id.size(); i++) {
+        if(id[i] == -1) {continue;}
+        int dst = i;
+        int src = id[i];
+        auto tmp = v[dst];
+        while(src != i){
+            v[dst] = v[src];
+            dst = src;
+            src = id[dst];
+            id[dst] = -1;
+        }
+        v[dst] = tmp;
+    }
+}
+#endif // Solution#3 The in-place solution using a map for "bucketing" the anagrams
 
 
 int main()
