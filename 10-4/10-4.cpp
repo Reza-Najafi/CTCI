@@ -40,7 +40,7 @@ class Listy {
     const int sz;
 };
 
-pair<int, int> findFirstGreatorVal(Listy& a, int offset, int x){
+pair<int, int> find_first_greater_val(Listy& a, int offset, int x){
     if(a[offset] != -1 && a[offset+1] == -1) { return make_pair(-1,-1); }// The last element
     // check if the start is an element bigger than the x
     if(x<=a[offset]){
@@ -63,12 +63,12 @@ pair<int, int> findFirstGreatorVal(Listy& a, int offset, int x){
     }
     // if got out of range (-1 is returned) call the same 
     // function at the previous location that was not out of range
-    return(findFirstGreatorVal(a,lastTriedLoc, x));
+    return(find_first_greater_val(a,lastTriedLoc, x));
 }
 
 int find(Listy& a, int x)
 {
-    auto p = findFirstGreatorVal(a,0,x);
+    auto p = find_first_greater_val(a,0,x);
     // Perform a binary search between p.first and p.second
     int l = p.first;
     int h = p.second;
@@ -89,7 +89,7 @@ int main() {
         cout << e << " , ";
     }
     int target = 25;
-    auto p = findFirstGreatorVal(a,0,target);
+    auto p = find_first_greater_val(a,0,target);
     cout << endl <<"The target: "<<target<< " is located in: [ "<< p.first << " "<< p.second<< " ] "<<endl;
     
     cout << "The index which the target is located at is "<< find(a,target)<<endl;
