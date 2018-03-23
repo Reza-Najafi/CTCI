@@ -1,6 +1,4 @@
-#include <iostream>
-using namespace std;
-/*
+/******************************************************************************************************
 * Seyedreza Najafi , March-2018
 * 
 * 10.4 Sorted Search, No Size: You are given an array-like data structure Listy which lacks a size
@@ -9,9 +7,9 @@ using namespace std;
 * structure only supports positive integers.) Given a Li sty which contains sorted, positive integers,
 * find the index at which an element x occurs. If x occurs multiple times, you may return any index.
 *
-*/
-
-
+******************************************************************************************************/
+#include <iostream>
+using namespace std;
 /*
 * The Listy class initializes an array of the size passed to the constructor
 * it gives access to its elements through the [] operator and also can be used 
@@ -96,6 +94,7 @@ int main() {
     
     cout << "The index which the target is located at is "<< find(a,target)<<endl;
 }
+
 
 
 
