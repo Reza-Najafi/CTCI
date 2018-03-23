@@ -1,53 +1,49 @@
 #include <iostream>
 #include "../utilities/Tree.h"
+
 using namespace std;
 
-
-
-Node* rec(Node*n , int p) {
-
-    Node* l = NULL, *r = NULL;
+/*
+* The rec function converts a subtree into a doubly likned list and 
+* returns a pair of pointers first to the head second to the tail
+*/
+pair<Node*,Node*> rec(Node*n , int p) {
+    Node *n1 = NULL;
+    pair<Node*,Node*> l = make_pair(n1,n1);
+    pair<Node*,Node*> r = make_pair(n1,n1);
+    
+    // Run the same routine on the left and right subtrees and get two lists l,r
     if(n->a[0]) {
-        l = rec(n->a[0],0);
+        l = rec(n->a[0],0);  
     }
     if(n->a[1]) {
-        r = rec(n->a[1],1);
+        r = rec(n->a[1],1);  
     }
-    Node* ret = NULL;
-    n->a[1] = r;
-    n->a[0] = l;
-    if(l)l->a[1] = n;
-    if(r)r->a[0] = n;
+    
+    // Merge the two resulting lists (l,r) and the current node into a new list
+    n->a[1] = r.first;
+    n->a[0] = l.first;
+    if(l.first)(l.first)->a[1] = n;
+    if(r.first)(r.first)->a[0] = n;
+    
+    // Putting together the return pair
+    pair<Node*,Node*> ret = make_pair(n1,n1);
+    ret.first = n;
+    ret.second = n;
     if(p==0){
-        if(r) {
-            ret = r;
-            // continue on the right wing until the leaf
-            while(ret->a[1]){
-                ret = ret->a[1];
-            }
-        } else {
-            ret = n;
-        }
+        if(r.second) { ret.first = r.second; }
+        if(l.second) { ret.second = l.second; } 
     }
-
+        
     if(p==1){
-        if(l) {
-            ret = l;
-            // continue on the left wing until the leaf
-            while(ret->a[0]){
-                ret = ret->a[0];
-            }
-        } else {
-            ret = n;
-        }
+        if(l.second) { ret.first = l.second; }
+        if(r.second) { ret.second = r.second; }
     }
-
+ 
     return ret;
 }
-Node* straigten(Node* n){
-    rec(n,1);
-    while(n->a[0]){n= n->a[0];}
-    return n;
+pair<Node*,Node*> straigten(Node* n){
+    return rec(n,1);
 };
 
 
@@ -66,12 +62,27 @@ int main()
     #endif
     Node* tree_root = n;
     printTree(tree_root);
-    Node* res = straigten(tree_root);
+    auto p = straigten(tree_root);
+
+    cout << "Traversing from the head to tail"<<endl;
+    Node* res = p.first; // list head
     do{
         cout << res->v << " , ";
         res=res->a[1];
     }while(res);
-
-
+    
+    cout << "Traversing from the tail to head"<< endl;
+    res = p.second; // list head
+    do{
+        cout << res->v << " , ";
+        res=res->a[0];
+    }while(res);
+    
     return 0;
 }
+
+
+
+
+
+
