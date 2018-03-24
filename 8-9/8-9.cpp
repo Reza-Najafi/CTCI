@@ -4,8 +4,8 @@
 #include<string>
 using namespace std;
 
-
-
+// Two solutions with slight implementation difference 
+#if 0
 void create(int n, vector<string>& l){
   int sz = l.size();
   for(int i=sz-1; i>=0; i--){
@@ -25,7 +25,26 @@ void create(int n, vector<string>& l){
     create(n,l);
   }
 }
+#else
+void create(int len, vector<string>& l) {
 
+  if(l.size() == 0){
+    l.push_back("()");
+  }
+  if(l[0].length() >= len-2) {return;}
+  int sz = l.size();
+  for(int i=0; i < sz; i++) {
+    string curStr = l[i]+"()";
+    l.push_back(curStr);
+    if(curStr != "()"+l[i]){
+      l.push_back("()" + l[i]);
+    }
+    l.push_back("("+l[i]+")");
+  }
+  l.erase(l.begin(),l.begin()+sz);
+  create(len,l);
+}
+#endif
 int main() {
     vector<string> l;
     int len;
@@ -35,5 +54,5 @@ int main() {
     for(string& s: l){
         cout << s<<endl;
     }
-    cin>>len;
+
 }
