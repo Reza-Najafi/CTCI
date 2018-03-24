@@ -15,7 +15,7 @@ public:
 private:
     map<char, int> m;
     int slen;
-    vector<pair<string, map<char, int>>> v;
+
     void createHist(string & in) {
         for(auto& c : in){
             if(m.find(c) == m.end()) {
@@ -25,7 +25,27 @@ private:
             }
         }
     }
-
+#if 1
+    vector<string> v;
+    void findPermRec(string currStr) {
+        if(currStr.length() == slen) {v.push_back(currStr);return;}
+        for(auto& p: m) {
+            char c = p.first;
+            int count = p.second;
+            if(count > 0) {
+                m[c] -=1;
+                string newS = currStr;
+                newS.push_back(c);
+                findPermRec(newS);
+                m[c] +=1;
+            }
+        }
+    }
+    void findPerm() {
+        findPermRec("");
+    }
+#else
+    vector<pair<string, map<char, int>>> v;
     void findPerm()
     {
         int vSize = v.size();
@@ -72,6 +92,7 @@ private:
         }
 
     }
+    #endif
 };
 
 int main() {
@@ -80,6 +101,6 @@ int main() {
     Perm p;
     auto v = p.getPerm(s);
     for(auto e: v){
-        cout << e.first<< endl;
+        cout << e<< endl;
     }
 }
