@@ -24,7 +24,8 @@ pair<vector<char>, bool> build_order(vector<char> proj, vector<pair<char, char>>
 		}
 	}
 
-	// go through the projects and check which ones are independent (not in the dep map)
+	// go through the projects and check which ones are independent (not in the dep map), remove them from the project list
+    // and also from the dependency map
 	vector<char> res;
 	while (!proj.empty()) {
 		int removedProjCounts = 0;
