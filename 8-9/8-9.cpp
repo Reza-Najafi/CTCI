@@ -5,7 +5,7 @@
 using namespace std;
 
 
-
+#if 0
 void create(int n, vector<string>& l){
   int sz = l.size();
   for(int i=sz-1; i>=0; i--){
@@ -25,7 +25,25 @@ void create(int n, vector<string>& l){
     create(n,l);
   }
 }
-
+#else 
+void create(int len, vector<string>& l) {
+  if(l.size() == len) {return;}
+  if(l.size() == 0){
+    l.push_back("()");
+  }
+  int sz = l.size();
+  for(int i=0; i < sz; i++) {
+    string curStr = l[i]+"()";
+    l.push_back(curStr);
+    if(curStr != "()"+l[i]){
+      l.push_back("()" + l[i]);
+    }
+    l.push_back("("+l[i]+")");
+  }
+  l.erase(l.begin(),l.begin()+sz);
+  create(len,l);
+}
+#endif
 int main() {
     vector<string> l;
     int len;
