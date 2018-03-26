@@ -20,11 +20,11 @@ int main() {
     int arr[] = {1,2,5,6,9,17,37,60,69,89,100,104,156,200,209,219,235,350};
 	for(auto& e:arr){cout << e << " "; }
 	cout << endl;
-    Node* root = createMinimalTree(arr, 0, sizeof(arr)/sizeof(arr[0]));
+    Node* root = createMinimalTree(arr, 0, sizeof(arr)/sizeof(arr[0])-1);
     printTree(root);
 	int arr2[] = {1,5,9,15, 20, 26, 50};
 	for(auto& e:arr2){cout << e << " "; }
 	cout << endl;
-	Node* root2 = createMinimalTree(arr2,0, sizeof(arr2)/sizeof(arr2[0]));
+	Node* root2 = createMinimalTree(arr2,0, sizeof(arr2)/sizeof(arr2[0])-1);
 	printTree(root2);
 }
