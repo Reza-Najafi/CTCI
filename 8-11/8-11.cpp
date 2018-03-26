@@ -1,43 +1,46 @@
+/******************************************************************************************************
+* Seyedreza Najafi , March-2018
+* Solution to the following problem from the "Cracking the Coding Interview" book, 6th edition
+* 
+* 8-11 Coins
+*
+******************************************************************************************************/
 #include <iostream>
-#include<set>
 
 using namespace std;
+int count = 0;
 
-
-std::set<int> _set;
-
-int recurs(int n, int s){
-  if(n<0) {
-    return 0;
-  }
-
-  if(n==0) {
-    // here is where we check if the set is unique or not
-    if(_set.find(s) == _set.end()){
-      _set.insert(s);
-      return 1;
-    }
-    return 0;
-  }
-
-  return (recurs(n-1 , s+1)+recurs(n-5, s+10)+recurs(n-10, s+100)+recurs(n-25, s+1000));
+void findLessThan5Comb(int val) {
+	count++; return;
 }
 
-int main(){
+void findLessThan10Comb(int val) {
+	if (val == 0) { count++; return; }
+	int maxNumOf5 = val / 5;
+	for (int i = 0; i <= maxNumOf5; i++) {
+		findLessThan5Comb(val - i * 5);
+	}
+}
 
-    int n;
-    cin >> n;
-#if 0
-    for(int i=0 ; i < n; i++){
-        _set.clear();
-        int out = recurs(i, 0);
-        cout << "input: "<<i << " output: "<< out<<endl;
-    }
-#else
-        _set.clear();
-        int out = recurs(n, 0);
-        cout << "input: "<<n << " output: "<< out<<endl;
-#endif
-    
-    cin >> n;
+void findLessThan25Comb(int val) {
+	if (val == 0) { count++; return; }
+	int maxNumOf10 = val / 10;
+	for (int i = 0; i <= maxNumOf10; i++) {
+		findLessThan10Comb(val - i * 10);
+	}
+}
+
+void findCoinsCombinations(int val) {
+	if (val == 0) { count++; return; }
+	int maxNumOf25 = val / 25;
+	for (int i = 0; i <= maxNumOf25; i++) {
+		findLessThan25Comb(val - i * 25);
+	}
+}
+
+int main() {
+  int val;
+  cin >> val;
+  findCoinsCombinations(val);
+  cout << "Number of ways of giving out "<< val << " cents using 25/10/5/1 is "<< count << endl;
 }
