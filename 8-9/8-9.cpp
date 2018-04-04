@@ -4,7 +4,11 @@
 #include<string>
 using namespace std;
 
+
+
+
 // Two solutions with slight implementation difference 
+
 #if 0
 void create(int n, vector<string>& l){
   int sz = l.size();
@@ -25,6 +29,7 @@ void create(int n, vector<string>& l){
     create(n,l);
   }
 }
+
 #else
 void create(int len, vector<string>& l) {
 
@@ -32,6 +37,7 @@ void create(int len, vector<string>& l) {
     l.push_back("()");
   }
   if(l[0].length() >= len-2) {return;}
+
   int sz = l.size();
   for(int i=0; i < sz; i++) {
     string curStr = l[i]+"()";
@@ -54,5 +60,4 @@ int main() {
     for(string& s: l){
         cout << s<<endl;
     }
-
 }
