@@ -4,9 +4,11 @@
 struct Node{
     int v;
     int rh; // right height
-	int lh;// left height
+	  int lh;// left height
     Node* a[2] = {NULL};
     Node(int val, Node* n0=NULL, Node* n1=NULL) {a[0] = n0; a[1]=n1; v = val;}
+    void addLeft(Node* n) {a[0] = n;}
+    void addRight(Node* n) {a[1] = n;}
 };
 // create_tree function
 Node* ct(int v, Node* nl=NULL, Node* nr=NULL) {
