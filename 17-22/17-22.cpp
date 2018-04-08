@@ -56,6 +56,7 @@ class WordTransformer
         }
         return s;
     }
+    //Do double sided BFS
     string searchPath(const string& w1, const string& w2) {
         if((m.find(w1)==m.end()) || (m.find(w2)==m.end())) return "";
         queue<Node*> q1; q1.push(m[w1]);
